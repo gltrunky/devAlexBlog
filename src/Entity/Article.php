@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
+use App\Model\TimetampedInterface;
 use App\Repository\ArticleRepository;
+//use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-class Article
+class Article implements TimetampedInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,7 +34,7 @@ class Article
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updatedAd = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'articles')]
     private Collection $categories;
@@ -45,6 +47,7 @@ class Article
 
     public function __construct()
     {
+        // $this->createdAt = new DateTime();
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -114,14 +117,14 @@ class Article
         return $this;
     }
 
-    public function getUpdatedAd(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedAd;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAd(?\DateTimeInterface $updatedAd): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAd = $updatedAd;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
