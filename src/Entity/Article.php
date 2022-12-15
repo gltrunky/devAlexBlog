@@ -197,4 +197,9 @@ class Article implements TimetampedInterface
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }
